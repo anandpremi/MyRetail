@@ -56,22 +56,4 @@ return intg.getProductDetails(productID).flatMap(resp -> {
 
 }
 
-/** method  getInterviewHours
-* input -> InterviewDocument
-* return Hours as String.
-**/
-
-Mono<String> getPanelHours(InterviewDocument request){
-Integer hours  =0 ;
-//getList of interview of each interview get the difference of starttime and end time and convert to hours
-return repo.getAllCandidateByStatus(request.getStartDateTime(), request.getEndDateTime())
-
-       .flatMap(interview -> {
-       
-       hours += util.getHours(interview.getStartDateTime(), interview.getgetEndDateTime());
-       return Mono.just(interview);
-       })
-       .flatMap(obj -> Mono.just(hours.to String()));
-    }
-
 }
