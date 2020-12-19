@@ -31,9 +31,9 @@ return repoPrice.updatePrice(productID, request.getValue()).flatMap(res -> Mono.
 }
 
 
-/** method getAllCandidates 
-* input -> InterviewDocument
-* return List<Candidate>.
+/** method getProduct 
+* input -> UUID
+* return Mono<Product>.
 **/
 
 Mono<Product> getProduct(UUID productID){
