@@ -1,0 +1,8 @@
+package com.example.Respository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import com.lowes.subscription.merchantengine.domain.SubscriptionOmniDetails;
+
+public interface EmployeeMongoRecord extends MongoRepository<Employee, String> {
+
+}
