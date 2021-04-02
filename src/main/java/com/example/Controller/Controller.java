@@ -65,13 +65,13 @@ public ResponseEntity<Employee> getEmployee(@RequestHeader final HttpHeaders htt
 	return response == null  ? ResponseEntity.noContent() : ResponseEntity.ok(response);
 	}
 
-@PatchMapping("/{id}")
+@PatchMapping("/")
 public ResponseEntity<Employee> updateEmployee(@RequestHeader final HttpHeaders httpHeaders, 
-			@PathVariable("id") String id, @RequestBody Employee emp){
+			@RequestBody Employee emp){
 
 	final String traceId = httpHeaders.getFirst("traceId");
 	log.info("For Trace ID {} updateEmployee request has been received", traceId);
-	Employee response = service.updateEmployee(emp,traceId);
+	Employee response = service.updateEmployee(emp, traceId);
 	return response == null  ? ResponseEntity.noContent() : ResponseEntity.ok(response);
 	}
 
