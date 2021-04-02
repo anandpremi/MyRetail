@@ -1,0 +1,31 @@
+package com.example.Configuration;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Configuration
+@Slf4j
+public class MongoConfig extends AbstractMongoClientConfiguration {
+
+	private String mongoDataBaseName = "test";
+  
+  private String uri = "mongodb://localhost:27017/test'";
+
+	@Override
+	protected String getDatabaseName() {
+		return mongoDataBaseName;
+	}
+	
+	@Override
+	public MongoClient mongoClient() {
+		return MongoClients.create(uri);
+	}
+
+}
