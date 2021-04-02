@@ -94,9 +94,23 @@ public String saveUser(MultipartFile file, String traceId) {
 	
 	
 	
-	
+public Employee getEmployee(UUID id){
+ 
+   return mongoRepo.findById(id);
 
+}	
+
+		
+public Employee deleteEmployee(UUID id){
+ 
+   return mongoRepo.deleteById(id);
+
+}
 	
-	
+public Employee updateEmployee(Employee emp){
+ 
+   return mongoRepo.save(emp);
+
+}
 
 }
