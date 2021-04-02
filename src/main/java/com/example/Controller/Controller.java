@@ -37,5 +37,22 @@ public class Controller {
 		return service.getProduct(productId);
 		
 		}
+	
+//--------------- ** Activity for Saving file data to DB and Fetch ** -------------------------------
+ 
+/** Saving file data to Mongo
+ * input -> xls file
+ * return ResponseEntity
+ **/	
+@PostMapping(value = "/upload", headers = ("content-type=multipart/*"), 
+			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+public ResponseEntity<HttpStatus> uploadFile(@RequestHeader final HttpHeaders httpHeader,
+			@RequestParam("file") MultipartFile file) {
+	final String traceId = httpHeader.getFirst(SubscriptionsMerchantConstant.TRACE_ID);
+	log.info("For Trace ID {} upload request has been received", traceId);
+	List<User> response = service.saveUser(file, traceId)
+	return response != null ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.badRequest());
+	
+	}
 
 }
