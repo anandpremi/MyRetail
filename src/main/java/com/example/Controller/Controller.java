@@ -50,8 +50,8 @@ public ResponseEntity<HttpStatus> uploadFile(@RequestHeader final HttpHeaders ht
 			@RequestParam("file") MultipartFile file) {
 	final String traceId = httpHeader.getFirst(SubscriptionsMerchantConstant.TRACE_ID);
 	log.info("For Trace ID {} upload request has been received", traceId);
-	List<User> response = service.saveUser(file, traceId)
-	return response != null ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.badRequest());
+	String response = service.saveUser(file, traceId)
+	return response.equals("Success") ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.badRequest());
 	
 	}
 
