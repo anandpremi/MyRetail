@@ -48,11 +48,41 @@ public class Controller {
 			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
 public ResponseEntity<HttpStatus> uploadFile(@RequestHeader final HttpHeaders httpHeader,
 			@RequestParam("file") MultipartFile file) {
-	final String traceId = httpHeader.getFirst(SubscriptionsMerchantConstant.TRACE_ID);
+	final String traceId = httpHeader.getFirst("traceId");
 	log.info("For Trace ID {} upload request has been received", traceId);
 	String response = service.saveUser(file, traceId)
 	return response.equals("Success") ? new ResponseEntity<>(HttpStatus.OK): new ResponseEntity<>(HttpStatus.badRequest());
 	
 	}
+	
+@GetMapping("/{id}")
+public ResponseEntity<Employee> getEmployee(@RequestHeader final HttpHeaders httpHeaders, 
+			@PathVariable("id") String id){
 
+	final String traceId = httpHeaders.getFirst("traceId");
+	log.info("For Trace ID {} getEmployee request has been received", traceId);
+	Employee response = service.getEmployee(id,traceId);
+	return response == null  ? ResponseEntity.noContent() : ResponseEntity.ok(response);
+	}
+
+@PatchMapping("/{id}")
+public ResponseEntity<Employee> updateEmployee(@RequestHeader final HttpHeaders httpHeaders, 
+			@PathVariable("id") String id, @RequestBody Employee emp){
+
+	final String traceId = httpHeaders.getFirst("traceId");
+	log.info("For Trace ID {} updateEmployee request has been received", traceId);
+	Employee response = service.updateEmployee(emp,traceId);
+	return response == null  ? ResponseEntity.noContent() : ResponseEntity.ok(response);
+	}
+
+	
+@DeleteMapping("/{id}")
+public ResponseEntity<Employee> deleteEmployee(@RequestHeader final HttpHeaders httpHeaders, 
+			@PathVariable("id") String id){
+
+	final String traceId = httpHeaders.getFirst("traceId");
+	log.info("For Trace ID {} deleteEmployee request has been received", traceId);
+	Employee response = service.deleteEmployee(id,traceId);
+	return response == null  ? ResponseEntity.noContent() : ResponseEntity.ok(response);
+	}
 }
