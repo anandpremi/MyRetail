@@ -14,6 +14,9 @@ PriceRepository repoPrice;
 CandidateRepository repoCandidate;
 
 @Autowired
+EmployeeMongoRecord mongoRepo;
+
+@Autowired
 Utility util;
 
 @Autowired
@@ -55,5 +58,45 @@ return intg.getProductDetails(productID).flatMap(resp -> {
 });
 
 }
+
+// ------------------------ ** File save activity starts here ** ---------------------------
+	
+public String saveUser(MultipartFile file, String traceId) {
+		log.info("Inside saveUser method for traceId :: {}", traceId);
+
+		List<Employee> list = new ArrayList<Employee>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+				XSSFRow row = sheet.getRow(i);
+				
+			Employee user = Employee.builder().id(UUID.randomUUID().toString())
+					name(row.getCell(1).getStringCellValue()).age(row.getCell(2).getNumericCellValue())
+					.build();
+					list.add(user);
+				
+			//condition to save every 10k record and empty the list
+			if(list.size>10000){
+			mongoRepo.saveAll(list);
+			list = Collections.emptyList();
+			}
+			
+				
+			}
+			workbook.close();
+		} catch (IOException e) {
+			log.error("For traceId{} error occuring during saveUser :: {}", traceId, e);
+			return "Failure";
+		}
+		return "Success";
+	}	
+	
+	
+	
+	
+
+	
+	
 
 }
